@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 my %symbols = map {$_ => 1} qw /tchomp/;
 
@@ -21,6 +21,8 @@ sub import {
 
 sub tchomp {
     my $text = shift;
+
+    # Matching with the hex values for the various line separators
     $text =~ s/^(.*?)(?:\x0D\x0A|\x0A|\x0D|\x0C|\x{2028}|\x{2029})/$1/s;
     return $text;
 }
@@ -83,6 +85,11 @@ returns the text.  Line separators currently handled include:
 
 =back
 
+=head1 TODO
+
+Precompile the regular expression used for speed, and so that it can 
+be accessed for split().
+
 =head1 BUGS
 
 Please report any bugs or feature requests to
@@ -94,8 +101,9 @@ be notified of progress on your bug as I make changes.
 
 Original inspiration came from an ancient perlbug 
 L<http://rt.perl.org/rt3/Ticket/Display.html?id=1807>.  #p5p provided some
-additional ideas regarding the Unicode (and a suggested name of Ch::omp).
-
+additional ideas regarding the Unicode (and a suggested name of Ch::omp).  
+Finally, the "Perl Cookbook" had information on how to match the 
+Unicode line and page separators.
 
 =head1 COPYRIGHT & LICENSE
 
